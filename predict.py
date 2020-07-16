@@ -7,8 +7,6 @@ from cv2 import cv2
 import numpy as np
 import os
 
-print(np.__version__)
-
 train = ImageDataGenerator(rescale = 1/255)
 validation = ImageDataGenerator(rescale= 1/255)
 
