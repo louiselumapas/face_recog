@@ -7,9 +7,6 @@ from cv2 import cv2
 import numpy as np
 import os
 
-img = image.load_img("C:/Users/mikee.saldua/Documents/FacialRecognition/practive/images/Train/Dylan/Dylan1.jpg")
-plt.imshow(img)
-
 print(np.__version__)
 
 train = ImageDataGenerator(rescale = 1/255)
@@ -42,7 +39,7 @@ model = tf.keras.models.Sequential([ tf.keras.layers.Conv2D(16,(3,3), activation
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model_fit = model.fit(train_dataset, epochs = 10, validation_data = validation_dataset)
 
-test_dataset = 'C:/Users/mikee.saldua/Documents/FacialRecognition/practive/images/Test'
+test_dataset = 'images/Test'
 
 for i in os.listdir(test_dataset):
     print(i)
@@ -59,4 +56,4 @@ for i in os.listdir(test_dataset):
     else:
         print("IU")
 
-model.save('C:/Users/mikee.saldua/Documents/FacialRecognition/practive/models')
+model.save('/models')
