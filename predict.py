@@ -54,4 +54,4 @@ for i in os.listdir(test_dataset):
     else:
         print("IU")
 
-model.save('/models')
+model.save('/images')
