@@ -23,6 +23,8 @@ validation_dataset = train.flow_from_directory('images/Validation',
                                         )
 print(train_dataset.class_indices)
 
+checkpoint_directory = 'checkpoints'
+
 model = tf.keras.models.Sequential([ tf.keras.layers.Conv2D(16,(3,3), activation = 'relu', input_shape=(200,200,3)),
         tf.keras.layers.MaxPool2D(2,2),
         tf.keras.layers.Conv2D(32,(3,3), activation = 'relu'),
@@ -34,8 +36,23 @@ model = tf.keras.models.Sequential([ tf.keras.layers.Conv2D(16,(3,3), activation
         tf.keras.layers.Dense(1, activation='sigmoid'),
         ])
 
+cp_callback = tf.keras.callbacks.ModelCheckpoint(
+    filepath = checkpoint_directory,
+    verbose = 1,
+    save_weights_only = False,
+    #monitor = val_loss,
+    #save_best_only = True
+)
+
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
-model_fit = model.fit(train_dataset, epochs = 10, validation_data = validation_dataset)
+# model_fit = model.fit(train_dataset, epochs = 10, validation_data = validation_dataset)
+
+model.fit(train_dataset,  
+          batch_size=3,
+          epochs=10,
+          validation_data= validation_dataset,
+          callbacks=[cp_callback]
+)
 
 test_dataset = 'images/Test'
 
@@ -54,4 +71,4 @@ for i in os.listdir(test_dataset):
     else:
         print("IU")
 
-model.save('/images')
+# model.save('saved_model/1')
